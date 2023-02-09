@@ -40,6 +40,25 @@ def analize_data(data):
     data.groupby('date')[['cases', 'deaths']].sum().plot(kind = 'line')
     plt.show()
 
+        #diagram(bar):
+    data.groupby('season')['cases'].sum().plot(kind = 'barh', color = ['blue','red'])
+        # after plotting the data, format the labels
+    current_values = plt.gca().get_xticks()
+        # using format string '{:,.0f}'
+    plt.gca().set_xticklabels(['{:,.0f}'.format(x) for x in current_values])
+    plt.show()
+
+        #diagram(pie):
+    data.groupby('weekdays')['deaths'].sum().plot(kind = 'pie')
+    plt.show()
+
+    weekends = data[['weekdays', 'cases', 'deaths']]
+    wes = ['Fri', 'Sat', 'Sun']
+    
+    #weekdays diagram(bar):
+    weekends["weekend"] = np.where((weekends["weekdays"] == 'Fri') | (weekends["weekdays"] == 'Sat') | (weekends["weekdays"] == 'Sun'),"Weekend", "Weekday")
+    weekends.groupby('weekend')['deaths'].sum().plot(kind = 'bar')
+    plt.show()
 
 def main():
     covid_data = pd.read_csv("ca-covid.csv")
