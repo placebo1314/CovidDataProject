@@ -10,9 +10,16 @@ def analize_data(data):
 
         #cast date to date format:
     data['date'] = pd.to_datetime(data['date'], format = "%d.%m.%y")
-    
+
         #set date to index:
     data.set_index(data['date'], inplace = True)
+
+        #add weekdays, month and season:
+    data['weekdays'] = data['date'].dt.strftime('%a')
+    data['season'] = np.where((data['date'].dt.month >= 5)
+                          & (data['date'].dt.month <= 9),
+                         "Hot season", "Cool season")
+    data['month'] = data['date'].dt.month_name()
 
         #basic stats:
     print(data.describe)
