@@ -21,6 +21,12 @@ def analize_data(data):
                          "Hot season", "Cool season")
     data['month'] = data['date'].dt.month_name()
 
+        #delete unnecessary column:
+    data.drop('state', axis = 1, inplace = True)
+
+        #reorder cols:
+    data = data[['season', 'month', 'weekdays', 'cases', 'deaths']]
+
         #basic stats:
     print(data.describe)
     print("Average cases in 2020 (/day): \n" , round(np.mean(data['cases']), 3))
