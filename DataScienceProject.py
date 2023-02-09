@@ -36,6 +36,10 @@ def analize_data(data):
     print("Caseless days: ")
     print(data[['cases', 'deaths']][data.cases == data['cases'].min()])
 
+        #diagram(line):
+    data.groupby('date')[['cases', 'deaths']].sum().plot(kind = 'line')
+    plt.show()
+
 
 def main():
     covid_data = pd.read_csv("ca-covid.csv")
